@@ -74,7 +74,7 @@
 
         @media (max-width: 768px) {
             header {
-                padding: 4px 10px;
+                padding: 0 8px;
             }
 
             .container {
@@ -99,7 +99,7 @@
             }
 
             .logo img {
-                height: 28px;
+                height: 24px;
                 width: auto;
             }
 
@@ -110,8 +110,8 @@
             .menu-toggle {
                 display: flex !important;
                 flex-direction: column;
-                gap: 4px;
-                padding: 6px;
+                gap: 3px;
+                padding: 4px;
                 margin: 0;
                 order: 2;
                 background: none;
@@ -120,10 +120,10 @@
             }
 
             .menu-toggle span {
-                width: 22px;
+                width: 18px;
                 height: 2px;
                 background-color: var(--primary-gold);
-                border-radius: 2px;
+                border-radius: 1px;
             }
         }
 
@@ -177,15 +177,16 @@
         }
 
         .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
+            transform: translateY(5px) rotate(45deg);
         }
 
         .menu-toggle.active span:nth-child(2) {
             opacity: 0;
+            transform: translateX(-10px);
         }
 
         .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
+            transform: translateY(-5px) rotate(-45deg);
         }
 
         /* Mobile Sidebar */
@@ -194,15 +195,18 @@
             top: 0;
             right: 0;
             width: 100%;
-            max-width: 300px;
+            max-width: 320px;
             height: 100vh;
-            background: linear-gradient(135deg, var(--black) 0%, var(--near-black) 100%);
-            border-left: 3px solid var(--primary-gold);
-            z-index: 999;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(10px);
+            border-left: 2px solid var(--primary-gold);
+            z-index: 2000;
             transform: translateX(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             overflow-y: auto;
-            box-shadow: -5px 0 20px rgba(212, 175, 55, 0.3);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
         }
 
         .mobile-sidebar.active {
@@ -210,49 +214,105 @@
         }
 
         .mobile-sidebar-header {
-            padding: 20px 15px;
-            border-bottom: 2px solid var(--primary-gold);
+            padding: 40px 20px 30px;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .mobile-sidebar-header img {
-            height: 60px;
+            height: 50px;
             width: auto;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
         }
 
         .mobile-sidebar-content {
-            padding: 30px 0;
+            padding: 20px 0;
+            flex: 1;
         }
 
         .mobile-sidebar-content ul {
             list-style: none;
+            padding: 0;
         }
 
         .mobile-sidebar-content li {
             margin: 0;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.4s ease;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Staggered animation for menu items */
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(4) {
+            transition-delay: 0.25s;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(5) {
+            transition-delay: 0.3s;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(6) {
+            transition-delay: 0.35s;
+        }
+
+        .mobile-sidebar.active .mobile-sidebar-content li:nth-child(7) {
+            transition-delay: 0.4s;
         }
 
         .mobile-sidebar-content a {
             display: block;
-            padding: 15px 20px;
+            padding: 18px 40px;
             color: var(--text-white);
             text-decoration: none;
             text-transform: uppercase;
             font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            letter-spacing: 2px;
             transition: all 0.3s ease;
-            border-left: 4px solid transparent;
+            text-align: left;
+            position: relative;
         }
 
-        .mobile-sidebar-content a:hover {
-            background-color: rgba(212, 175, 55, 0.1);
+        .mobile-sidebar-content a:hover,
+        .mobile-sidebar-content a:active {
             color: var(--primary-gold);
-            border-left-color: var(--primary-gold);
-            padding-left: 24px;
+            background: rgba(212, 175, 55, 0.05);
+            padding-left: 45px;
+        }
+
+        .mobile-sidebar-content a::before {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+            transform: translateY(-50%);
+        }
+
+        .mobile-sidebar-content a:hover::before {
+            width: 10px;
         }
 
         .sidebar-overlay {
@@ -261,11 +321,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 998;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1500;
             display: none;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
         }
 
         .sidebar-overlay.active {
@@ -538,7 +599,12 @@
         }
 
         .about-text {
-            flex: 1;
+            flex: 1.2;
+        }
+
+        /* Ensure image stays on the right on desktop even if it's first in HTML */
+        .about .about-content {
+            flex-direction: row-reverse;
         }
 
         .about-text p {
@@ -547,13 +613,17 @@
             line-height: 1.6;
         }
 
+        .about .about-image {
+            background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+
         .about-image {
             flex: 1;
-            height: 400px;
-            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            height: 450px;
             background-size: cover;
             background-position: center;
             border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -1160,9 +1230,9 @@
             }
 
             .navbar {
-                flex-direction: column;
-                padding: 12px 0;
-                gap: 15px;
+                flex-direction: row !important;
+                padding: 0;
+                gap: 5px;
             }
 
             .nav-links {
@@ -1229,8 +1299,25 @@
 
             .about-image {
                 width: 100%;
-                height: 250px;
+                height: 280px !important;
+                min-height: 280px !important;
                 border-radius: 8px;
+                display: block !important;
+                background-size: cover !important;
+                background-position: center !important;
+                margin-bottom: 20px;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            .about .about-image {
+                background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') !important;
+            }
+
+            .about-content {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px;
             }
 
             .section-title {
@@ -1438,7 +1525,7 @@
             }
 
             .navbar {
-                padding: 10px 0;
+                padding: 0;
             }
 
             .nav-links {
@@ -1456,8 +1543,8 @@
             }
 
             .hero {
-                padding: 100px 12px 50px;
-                margin-top: 70px;
+                padding: 60px 12px 30px;
+                margin-top: 40px;
             }
 
             .hero h1 {
@@ -1896,6 +1983,7 @@
             <h2 class="section-title">ABOUT ALPINE VISTAS</h2>
             <div class="content-box">
                 <div class="about-content">
+                    <div class="about-image"></div>
                     <div class="about-text">
                         <p>The ornamental gate at the entrance to Alpine Vistas welcomes you with green spaces and water
                             bodies. As you step in, you are transported to a world of tree-lined avenues, blooming
@@ -1910,7 +1998,6 @@
                             view and the musical sound of water. Our well-maintained mechanics ensure that the water
                             flow is fresh.</p>
                     </div>
-                    <div class="about-image"></div>
                 </div>
             </div>
         </div>
@@ -2420,7 +2507,7 @@
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetElement.offsetTop - 40,
                         behavior: 'smooth'
                     });
                 }
@@ -2505,15 +2592,14 @@
             });
         });
 
-        // Sticky header background on scroll
         window.addEventListener('scroll', function () {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
+            if (window.scrollY > 30) {
                 header.style.backgroundColor = 'rgba(0, 0, 0, 0.98)';
-                header.style.padding = '10px 0';
+                header.classList.add('scrolled');
             } else {
                 header.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-                header.style.padding = '20px 0';
+                header.classList.remove('scrolled');
             }
         });
 
