@@ -1,0 +1,2341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine Vistas | Luxury Villa Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --secondary-gold: #C5A028;
+            --light-gold: #F1D38A;
+            --dark-gold: #996515;
+            --black: #000000;
+            --near-black: #0A0A0A;
+            --dark-gray: #1A1A1A;
+            --text-white: #FFFFFF;
+            --text-gold: #D4AF37;
+            --border-gold: rgba(212, 175, 55, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--text-white);
+            line-height: 1.6;
+            background-color: var(--black);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(0, 0, 0, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0 15px;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            margin-right: 10px;
+            display: block;
+        }
+
+        .logo span {
+            color: var(--primary-gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary-gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-white);
+            font-weight: 500;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links li {
+                margin-left: 20px;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
+            margin-top: 80px;
+            min-height: 500px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            transform: translateY(-50%);
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hero-nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .hero-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--primary-gold);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #eee;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-gold);
+            color: var(--black);
+            padding: 15px 40px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            border: 1px solid var(--primary-gold);
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--primary-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            color: var(--primary-gold);
+            border: 2px solid var(--primary-gold);
+        }
+
+        .cta-button.secondary:hover {
+            background-color: var(--primary-gold);
+            color: var(--black);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 0.85rem;
+                letter-spacing: 1px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+                width: 100%;
+            }
+
+            .hero-buttons {
+                gap: 15px;
+                width: 100%;
+            }
+
+            .hero-buttons .cta-button {
+                flex: 1;
+                min-width: 150px;
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-gold);
+            font-size: 2.5rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-gold);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .content-box {
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            border: 1px solid var(--border-gold);
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .about-image {
+            flex: 1;
+            height: 400px;
+            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .about-text p {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--border-gold);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #ddd;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .feature-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Highlights */
+        .highlights-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .highlight-item i {
+            color: var(--primary-gold);
+            margin-right: 15px;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .highlights-list {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        /* Specifications Section */
+        .specifications {
+            background-color: var(--black);
+            padding: 80px 0;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px 50px;
+            margin-top: 40px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .spec-icon {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .spec-icon i {
+            font-size: 0.9rem;
+            color: #000;
+        }
+
+        .spec-content {
+            flex: 1;
+        }
+
+        .spec-item h4 {
+            color: var(--primary-gold);
+            margin: 0 0 6px 0;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .spec-item p {
+            color: #ddd;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .specs-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+
+
+        /* Villas Section */
+        .villas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .villa-card {
+            background-color: var(--dark-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-gold);
+            transition: all 0.3s;
+        }
+
+        .villa-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .villa-image {
+            height: 200px;
+            background-color: #222;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .villa-details {
+            padding: 25px;
+        }
+
+        .villa-details h3 {
+            color: var(--primary-gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        .villa-details p {
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .specs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .villa-card:hover {
+                transform: translateY(-3px);
+            }
+
+            .villa-image {
+                height: 200px;
+            }
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 0.8fr));
+            gap: 30px;
+        }
+
+        .contact-info {
+            background-color: var(--dark-gray);
+            color: var(--text-white);
+            padding: 30px 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-gold);
+            transition: all 0.3s;
+        }
+
+        .contact-info:hover {
+            border-color: var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+        }
+
+        .contact-info > p {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #ddd;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .contact-item i {
+            font-size: 0.9rem;
+            color: var(--primary-gold);
+            margin-right: 12px;
+            width: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .contact-item h4 {
+            margin: 0 0 3px 0;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .contact-item p {
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #ddd;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            border: 1.5px solid var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-gold);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-gold);
+            color: var(--black);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .contact-info {
+                padding: 20px;
+            }
+
+            .contact-info:hover {
+                transform: none;
+            }
+        }
+
+        .contact-form {
+            background-color: var(--dark-gray);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-gold);
+        }
+
+        .contact-form h3 {
+            margin-bottom: 30px;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .contact-form .cta-button {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            padding: 12px;
+        }
+
+        .contact-form .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 12px;
+            }
+
+            .contact-form h3 {
+                margin-bottom: 20px;
+                font-size: 1rem;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border-gold);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            background-color: var(--black);
+            color: var(--text-white);
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+        }
+
+        @media (max-width: 480px) {
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-control {
+                padding: 10px 12px;
+                font-size: 16px;
+            }
+
+            textarea.form-control {
+                resize: vertical;
+                min-height: 100px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--near-black);
+            color: var(--text-white);
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-gold);
+        }
+
+        .landmarks-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .landmark-column h3 {
+            color: var(--primary-gold);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .landmark-column ul {
+            list-style: none;
+            padding: 0;
+            color: #ddd;
+            line-height: 1.4;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 1200px) {
+            .landmarks-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .landmarks-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .landmark-column h3 {
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+            }
+
+            .landmark-column ul {
+                font-size: 0.7rem;
+            }
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .footer-logo img {
+            height: 220px;
+            width: auto;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .footer-logo span {
+            color: var(--primary-gold);
+        }
+
+        /* Location Plane Section */
+        .location-plane {
+            padding: 60px 0;
+            background-color: var(--black);
+        }
+
+        .location-plane .section-title {
+            margin-bottom: 40px;
+        }
+
+        .location-plane-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .location-plane img {
+            max-width: 80%;
+            width: 700px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+            border: 1px solid var(--border-gold);
+        }
+
+        @media (max-width: 768px) {
+            .location-plane img {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--primary-gold);
+            text-transform: uppercase;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-gold);
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .footer-logo {
+                font-size: 22px;
+            }
+
+            .footer-links h4 {
+                font-size: 1rem;
+                margin-bottom: 15px;
+            }
+
+            .footer-links a {
+                font-size: 0.9rem;
+            }
+
+            .copyright {
+                font-size: 0.8rem;
+                padding-top: 20px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+
+            .content-box {
+                padding: 30px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 22px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 12px 0;
+                gap: 15px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .nav-links li {
+                margin: 0 8px;
+            }
+
+            .nav-links a {
+                font-size: 0.7rem;
+                letter-spacing: 0.5px;
+            }
+
+            .hero {
+                padding: 120px 15px 60px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                letter-spacing: 2px;
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+                max-width: 100%;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+                width: 100%;
+            }
+
+            .hero-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .hero-nav {
+                padding: 0 20px;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            .about-image {
+                width: 100%;
+                height: 250px;
+                border-radius: 8px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+                letter-spacing: 1px;
+            }
+
+            .section-title:after {
+                width: 60px;
+                height: 2px;
+            }
+
+            .content-box {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .feature-card {
+                padding: 20px;
+                border-radius: 6px;
+            }
+
+            .feature-icon {
+                font-size: 2rem;
+                margin-bottom: 15px;
+            }
+
+            .feature-card h3 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .feature-card p {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+                gap: 15px 0;
+            }
+
+            .spec-item {
+                gap: 12px;
+            }
+
+            .spec-icon {
+                width: 28px;
+                height: 28px;
+                flex-shrink: 0;
+            }
+
+            .spec-icon i {
+                font-size: 0.8rem;
+            }
+
+            .spec-item h4 {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .spec-item p {
+                font-size: 0.75rem;
+                line-height: 1.4;
+            }
+
+            .villas-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .villa-image {
+                height: 250px;
+            }
+
+            .villa-details {
+                padding: 20px;
+            }
+
+            .villa-details h3 {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .gallery-item {
+                padding: 8px;
+            }
+
+            .gallery-item img {
+                max-height: 350px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .contact-info {
+                padding: 20px;
+                border-radius: 6px;
+            }
+
+            .contact-info h3 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .contact-item i {
+                font-size: 0.8rem;
+                margin-right: 10px;
+            }
+
+            .contact-item h4 {
+                font-size: 0.85rem;
+                margin-bottom: 2px;
+            }
+
+            .contact-item p {
+                font-size: 0.8rem;
+                line-height: 1.3;
+            }
+
+            .contact-form {
+                padding: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .form-group label {
+                font-size: 0.75rem;
+                margin-bottom: 3px;
+            }
+
+            .form-control {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            .location-plane-content img {
+                max-width: 95%;
+                width: 100%;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-links h4 {
+                font-size: 1rem;
+            }
+
+            .footer-links ul {
+                font-size: 0.9rem;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            .clubhouse-facilities {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .facility-list {
+                font-size: 0.95rem;
+            }
+
+            .facility-item {
+                margin-bottom: 12px;
+                padding-left: 25px;
+            }
+
+            .social-links a {
+                width: 32px;
+                height: 32px;
+                font-size: 0.7rem;
+            }
+
+            .close-modal {
+                top: 15px;
+                right: 20px;
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 18px;
+                letter-spacing: 1px;
+            }
+
+            .navbar {
+                padding: 10px 0;
+            }
+
+            .nav-links {
+                margin-top: 12px;
+                gap: 5px;
+            }
+
+            .nav-links li {
+                margin: 0 5px;
+            }
+
+            .nav-links a {
+                font-size: 0.65rem;
+                letter-spacing: 0.3px;
+            }
+
+            .hero {
+                padding: 100px 12px 50px;
+                margin-top: 70px;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+                letter-spacing: 1px;
+                margin-bottom: 12px;
+            }
+
+            .hero p {
+                font-size: 0.85rem;
+                margin-bottom: 15px;
+            }
+
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
+            }
+
+            .hero-buttons {
+                gap: 12px;
+            }
+
+            .hero-nav {
+                padding: 0 10px;
+            }
+
+            .hero-nav-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+                margin-bottom: 25px;
+                letter-spacing: 0.5px;
+            }
+
+            .section-title:after {
+                width: 50px;
+                height: 2px;
+                bottom: -12px;
+            }
+
+            .content-box {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .about-text h3 {
+                font-size: 0.95rem;
+            }
+
+            .about-text p {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            .feature-card {
+                padding: 15px;
+            }
+
+            .feature-icon {
+                font-size: 1.8rem;
+                margin-bottom: 12px;
+            }
+
+            .feature-card h3 {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .feature-card p {
+                font-size: 0.8rem;
+            }
+
+            .facility-item {
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+                padding-left: 22px;
+            }
+
+            .facility-item::before {
+                font-size: 1rem;
+            }
+
+            .specs-grid {
+                gap: 12px 0;
+            }
+
+            .spec-item {
+                gap: 10px;
+            }
+
+            .spec-icon {
+                width: 26px;
+                height: 26px;
+            }
+
+            .spec-icon i {
+                font-size: 0.75rem;
+            }
+
+            .spec-item h4 {
+                font-size: 0.7rem;
+                margin-bottom: 3px;
+            }
+
+            .spec-item p {
+                font-size: 0.7rem;
+                line-height: 1.3;
+            }
+
+            .villa-details h3 {
+                font-size: 1rem;
+            }
+
+            .specs {
+                font-size: 0.8rem;
+            }
+
+            .gallery-item img {
+                max-height: 300px;
+            }
+
+            .contact-info {
+                padding: 15px;
+            }
+
+            .contact-info h3 {
+                font-size: 0.95rem;
+            }
+
+            .contact-item {
+                margin-bottom: 15px;
+            }
+
+            .contact-item i {
+                font-size: 0.75rem;
+                margin-right: 8px;
+                width: 18px;
+            }
+
+            .contact-item h4 {
+                font-size: 0.8rem;
+            }
+
+            .contact-item p {
+                font-size: 0.75rem;
+            }
+
+            .contact-form {
+                padding: 12px;
+            }
+
+            .form-group label {
+                font-size: 0.7rem;
+            }
+
+            .form-control {
+                padding: 7px;
+                font-size: 0.75rem;
+            }
+
+            .social-links a {
+                width: 30px;
+                height: 30px;
+                font-size: 0.65rem;
+                border-width: 1px;
+            }
+
+            .footer-logo {
+                font-size: 20px;
+            }
+
+            .footer-links h4 {
+                font-size: 0.95rem;
+                margin-bottom: 12px;
+            }
+
+            .footer-links ul {
+                font-size: 0.8rem;
+            }
+
+            .footer-links li {
+                margin-bottom: 8px;
+            }
+
+            .copyright {
+                font-size: 0.75rem;
+                padding-top: 20px;
+            }
+
+            section {
+                padding: 30px 0;
+            }
+
+            .location-plane-content img {
+                border-radius: 6px;
+            }
+        }
+
+        /* Amenities & Lifestyle Section */
+        .amenities-section {
+            background-color: var(--black);
+            padding: 80px 0;
+        }
+
+        .clubhouse-facilities {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .facility-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .facility-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #ddd;
+            transition: all 0.3s;
+        }
+
+        .facility-item::before {
+            content: '+';
+            position: absolute;
+            left: 0;
+            color: var(--primary-gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .facility-item:hover {
+            color: var(--primary-gold);
+            transform: translateX(5px);
+        }
+
+        /* Gallery Section Styling */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--border-gold);
+            background-color: #0c0c0c;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--primary-gold);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Modal/Lightbox Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: auto;
+            max-width: 90%;
+            max-height: 90vh;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--primary-gold);
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: var(--primary-gold);
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 2001;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                max-width: 95%;
+                max-height: 85vh;
+            }
+
+            .close-modal {
+                top: 12px;
+                right: 15px;
+                font-size: 28px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .gallery-item {
+            cursor: zoom-in;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><img src="images/Alpine.png" alt="Alpine Vistas Logo"></a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#amenities">Amenities</a></li>
+                    <li><a href="#features">East Villas</a></li>
+                    <li><a href="#west-villas">West Villas</a></li>
+                    <li><a href="#upcoming">Upcoming</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('images/bg.png');"></div>
+            <div class="hero-slide" style="background-image: url('images/bg1.png');"></div>
+            <div class="hero-slide" style="background-image: url('images/bg2.png');"></div>
+            <div class="hero-slide" style="background-image: url('images/bg3.png');"></div>
+        </div>
+
+        <div class="hero-nav">
+            <button class="hero-nav-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="hero-nav-btn next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <div class="container">
+            <h1>TAKE THE THRONE FOR A ROYAL LIFE</h1>
+            <p>You are the Lord and Master of all you survey. This ultra-premium villa community is your kingdom where
+                you are free to live on your own terms. Experience luxury in the lap of nature as you enjoy every moment
+                at your private villa in Alpine Vistas.</p>
+            <p>Presenting 40% open space and 100% enchanted for the kings and queens of today.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="cta-button">Schedule a Visit</a>
+                <a href="https://drive.google.com/file/d/1fBgDXexzh5lf9tdoqvcTfKc6knz5TUFI/view?usp=sharing" class="cta-button secondary" target="_blank">Download Brochure</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">ABOUT ALPINE VISTAS</h2>
+            <div class="content-box">
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>The ornamental gate at the entrance to Alpine Vistas welcomes you with green spaces and water
+                            bodies. As you step in, you are transported to a world of tree-lined avenues, blooming
+                            gardens, smart intersections and homes that twinkle like jewels. It's like God has created a
+                            fairyland for you.</p>
+                        <p style="margin-top: 20px;">It's no less than a royal abode, with thoughtfully designed
+                            interiors, sensitive personal nooks, sophisticated fashions, and meticulous space planning.
+                            Take a look at the facade and you'll fall in love with the minimalist lines. Every style is
+                            a gem, and stylish, each villa is a gem.</p>
+                        <p style="margin-top: 20px;">The private sit-outs and terrace gardens open up to a breathtaking
+                            view. The enchanting pergola has a lovely seating space where people can enjoy the natural
+                            view and the musical sound of water. Our well-maintained mechanics ensure that the water
+                            flow is fresh.</p>
+                    </div>
+                    <div class="about-image"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities & Lifestyle Section -->
+    <section id="amenities" class="amenities-section">
+        <div class="container">
+            <h2 class="section-title">Amenities & Lifestyle</h2>
+
+            <div class="content-box">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3
+                            style="color: var(--primary-gold); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;">
+                            Clubhouse Facilities</h3>
+                        <ul class="facility-list">
+                            <li class="facility-item">Lavish Swimming Pool</li>
+                            <li class="facility-item">Expansive Sun Deck and Lounge Area</li>
+                            <li class="facility-item">Indoor and Outdoor Social Room</li>
+                            <li class="facility-item">State of the Art Gym and Yoga Studio</li>
+                            <li class="facility-item">Banquet Hall</li>
+                            <li class="facility-item">Great Room with Social Area, Including Pool Table and Flat Screen
+                                TV</li>
+                            <li class="facility-item">Game Room and Library</li>
+                            <li class="facility-item">Terrace Party Area</li>
+                            <li class="facility-item">Ample Parking in Clubhouse Cellar</li>
+                        </ul>
+                    </div>
+                    <div class="about-image" style="background-image: url('images/new.png');">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">ALPINE VISTAS EAST VILLAS</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0014.jpg" alt="East Villa Interior 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0015.jpg" alt="East Villa Interior 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0016.jpg" alt="East Villa Interior 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0017.jpg" alt="East Villa Interior 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0018.jpg" alt="East Villa Interior 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0019.jpg" alt="East Villa Interior 6">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0020.jpg" alt="East Villa Interior 7">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0021.jpg" alt="East Villa Interior 8">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- West Villas Section -->
+    <section id="west-villas" class="west-villas">
+        <div class="container">
+            <h2 class="section-title">ALPINE VISTAS WEST VILLAS</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0022.jpg" alt="West Villa 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0023.jpg" alt="West Villa 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0024.jpg" alt="West Villa 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/Alpine vistas_page-0025.jpg" alt="West Villa 4">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Projects Section -->
+    <section id="upcoming" class="upcoming-projects" style="padding: 40px 0;">
+        <h2 class="section-title">UPCOMING PROJECTS</h2>
+        <div class="gallery-item-large"
+            style="width: 100%; max-width: 1400px; margin: 0 auto; overflow: hidden; cursor: zoom-in; background-color: #000;">
+            <img src="images/Alpine vistas_page-0010.jpg" alt="Upcoming Project"
+                style="width: 100%; height: auto; display: block;">
+        </div>
+    </section>
+
+    <!-- Specifications Section -->
+    <section class="specifications">
+        <div class="container">
+            <h2 class="section-title">SPECIFICATIONS</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-building"></i></div>
+                    <div class="spec-content">
+                        <h4>STRUCTURE</h4>
+                        <p>RCC Framed structure of Ground +2 floors</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-sink"></i></div>
+                    <div class="spec-content">
+                        <h4>WASH BASINS AND CP FITTINGS</h4>
+                        <p>Wash basins in all bath rooms with Grohe or equivalent (Hindware/ Jaguar/ equivalent) with
+                            hot & cold water arrangement. Provision for Washing Machine in Utility or equivalent over
+                            fresh shower with concealed aluminium jet kit/drain outlets</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-building"></i></div>
+                    <div class="spec-content">
+                        <h4>SUPER STRUCTURE</h4>
+                        <p>8"/9" Thick external walls<br>4"/4½" Thick Internal Walls<br>Red Brick/CC Block with Cement
+                            Mortar</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-door-open"></i></div>
+                    <div class="spec-content">
+                        <h4>DOORS/FRAMES</h4>
+                        <p>All door frames & Shutters provided with teak wood and flush shutter or equivalent over
+                            luster Paint or designer of Equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-trowel"></i></div>
+                    <div class="spec-content">
+                        <h4>PLASTERING</h4>
+                        <p>2 Coats of Plastering for External Walls<br>2 Coats of Plastering for Internal Walls</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-window-maximize"></i></div>
+                    <div class="spec-content">
+                        <h4>WINDOWS / FRS</h4>
+                        <p>All windows & French doors of UPVC make with mosquito mesh or equivalent</p>
+                    </div>
+                </div>
+
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-bezier-curve"></i></div>
+                    <div class="spec-content">
+                        <h4>BALCONES</h4>
+                        <p>Elevation balcony SS Railing with glass and staircase SS railing (Asian/Muranoor Equivalent)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-paint-roller"></i></div>
+                    <div class="spec-content">
+                        <h4>PAINTING</h4>
+                        <p>External and Ceiling Painting - 2 Coats putty + 1 coat of primer + 2 coats of emulsion over
+                            luster for all exterior of Equivalent<br>
+                            Internal and Door Painting - 2 Coats putty + 2 Coats of premium emulsion paint (Asian/Berger
+                            of Equivalent)</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-fire"></i></div>
+                    <div class="spec-content">
+                        <h4>GEYSER POINTS</h4>
+                        <p>Power point provision for Geyser in all bedrooms toilets & equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="spec-content">
+                        <h4>KITCHEN</h4>
+                        <p>Granite/Marble counter top/platform counter for all with tap & water purifier with provision
+                            for drilling of water purifier.</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-phone"></i></div>
+                    <div class="spec-content">
+                        <h4>COMMUNICATION</h4>
+                        <p>Telephone cabling for all bedrooms and Internet connectivity or equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-wrench"></i></div>
+                    <div class="spec-content">
+                        <h4>PLUMBING</h4>
+                        <p>CPVC Pipes provided for Sewage/supply lines (Astrla / Astroiter / Astral or Supreme)<br>
+                            UPVC Pipes provided for water supply lines (Astrla / Astroiter / Astral or Supreme-75
+                            PSI)<br>
+                            Antivalve valves will be provided in all drainage line (Equivalent)</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-tv"></i></div>
+                    <div class="spec-content">
+                        <h4>ENTERTAINMENT</h4>
+                        <p>TV Cabling for all bedrooms or equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="spec-content">
+                        <h4>ELECTRICAL</h4>
+                        <p>All wiring & panel/Finolex/Polycab or Equivalent Switches / GM modular or equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-elevator"></i></div>
+                    <div class="spec-content">
+                        <h4>LIFT</h4>
+                        <p>Provision for Lift</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-tint"></i></div>
+                    <div class="spec-content">
+                        <h4>WATER SUPPLY</h4>
+                        <p>Bore well + Centralized water distribution by Hydro pneumatic system for all villas</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-battery-full"></i></div>
+                    <div class="spec-content">
+                        <h4>POWER BACKUP</h4>
+                        <p>Provision for 02 power back for common living/dining room or equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-video"></i></div>
+                    <div class="spec-content">
+                        <h4>SECURITY SYSTEM</h4>
+                        <p>Individual metered the clock security system Solar Flap lights or equivalent</p>
+                    </div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="spec-icon"><i class="fas fa-recycle"></i></div>
+                    <div class="spec-content">
+                        <h4>STP</h4>
+                        <p>Sewage treatment plant of adequate capacity as per norms will be provided for recycled
+                            water/green/landscaping and toilets to maximize water usage with extra features</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reputed Landmarks/Location Advantages Section -->
+    <section id="landmarks" class="landmarks" style="background-color: var(--dark-gray); padding: 80px 0;">
+        <div class="container">
+            <h2 class="section-title">Reputed Landmarks/Location Advantages</h2>
+
+            <p style="text-align: start; color: #ddd; margin-bottom: 20px; margin-top: 40px;">All institutions near by
+                1 to 5kms only</p>
+
+            <div class="landmarks-grid">
+                <!-- Education Institutions -->
+                <div class="landmark-column">
+                    <h3>Education Institutions</h3>
+                    <ul>
+                        <li>IIT Hyderabad, Kandi</li>
+                        <li>Geetham's Engg. College</li>
+                        <li>Gaudium School</li>
+                        <li>Oakdale International School</li>
+                        <li>Samashti International School</li>
+                        <li>Birla Open Mind International School</li>
+                        <li>Green Gables International School</li>
+                        <li>PIMS (Padmavathi Inst. of Medical Sciences)</li>
+                    </ul>
+                </div>
+
+                <!-- Education Institutions (Continued) -->
+                <div class="landmark-column">
+                    <h3>Education Institutions</h3>
+                    <ul>
+                        <li>RRS College of Eng. & Tech.</li>
+                        <li>Sri Chaitanya High School</li>
+                        <li>Krishnaveni High School</li>
+                        <li>Narayana IIT Academy</li>
+                        <li>Ellenki College of Eng. and Tech.</li>
+                        <li>St. Mary's College of Eng. & Tech.</li>
+                        <li>International Schools</li>
+                    </ul>
+                </div>
+
+                <!-- Strategic Areas -->
+                <div class="landmark-column">
+                    <h3>Strategic Areas</h3>
+                    <ul>
+                        <li>Outer Ring Road - 05 mins</li>
+                        <li>NH 65 - Mumbai Highway - 05 mins</li>
+                        <li>Gachibowli Cross Road - 30 mins</li>
+                        <li>Financial District (ORR) - 20 mins</li>
+                        <li>Chandla Nagar - 20 mins</li>
+                        <li>Patancheruvu - 10mins</li>
+                    </ul>
+                </div>
+
+                <!-- Hospitals -->
+                <div class="landmark-column">
+                    <h3>Hospitals</h3>
+                    <ul>
+                        <li>Continental Hospital</li>
+                        <li>SVS Hospital</li>
+                        <li>Sai Krishna Hospital</li>
+                        <li>Peoples Hospital</li>
+                        <li>Sai Ganesh Hospital</li>
+                    </ul>
+                </div>
+
+                <!-- Companies & Industries -->
+                <div class="landmark-column">
+                    <h3>Companies & Industries</h3>
+                    <ul>
+                        <li>Bharath Heavy Electricals Limited (BHEL)</li>
+                        <li>Ordinance Factory Medak Office (Army)</li>
+                        <li>Hindalco Industries Ltd. (Aditya Birla Group)</li>
+                        <li>TSIIC HUB</li>
+                        <li>Signode</li>
+                        <li>Kirby</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">CONTACT US</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>Experience luxury living at Alpine Vistas. Contact us for site visits and more information about
+                        our premium villa community.</p>
+
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Alpine Vistas, Premium Villa Community</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+91 XXXXX XXXXX</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@alpinevistas.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Visit Us</h4>
+                            <p>Monday - Sunday: 9:00 AM - 7:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 30px; color: #1a5f7a;">Schedule a Visit</h3>
+                    <form id="visitForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Your Phone Number" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" rows="5"
+                                placeholder="Your Message or Preferred Visit Time"></textarea>
+                        </div>
+
+                        <button type="submit" class="cta-button"
+                            style="width: 100%; border: none; cursor: pointer;">Submit Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Plane Section -->
+    <section id="location" class="location-plane">
+        <div class="container">
+            <h2 class="section-title">LOCATION PLAN</h2>
+            <div class="location-plane-content">
+                <img src="images/location.png" alt="Alpine Vistas Location Plan">
+            </div>
+        </div>
+    </section>
+
+    </section>
+
+    <!-- Image Modal for Lightbox -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <a href="#" class="footer-logo"><img src="images/Alpine.png" alt="Alpine Vistas Logo" style="height: 150px; width: auto; margin-bottom: 10px;"></a>
+                    <p style="color: #bbb;">An ultra-premium villa community offering luxury in the lap of nature.
+                        Experience royal living with 40% open space and world-class amenities.</p>
+                    <p style="margin-top: 15px; color: var(--primary-gold);">Developed by <strong>Anmol
+                            Constructions</strong></p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#amenities">Amenities</a></li>
+                        <li><a href="#features">Project Highlights</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Clubhouse</h4>
+                    <ul>
+                        <li><a href="#amenities">Swimming Pool</a></li>
+                        <li><a href="#amenities">Gym & Yoga Studio</a></li>
+                        <li><a href="#amenities">Social Rooms</a></li>
+                        <li><a href="#amenities">Banquet Hall</a></li>
+                        <li><a href="#amenities">Game Room</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 Alpine Vistas. All Rights Reserved. | HMDA Approved Layout | Developed by Anmol
+                    Constructions</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('visitForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you shortly to schedule your visit to Alpine Vistas.');
+            this.reset();
+        });
+
+        // Hero Slider Logic
+        const slides = document.querySelectorAll('.hero-slide');
+        const prevBtn = document.querySelector('.hero-nav-btn.prev');
+        const nextBtn = document.querySelector('.hero-nav-btn.next');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function resetSlideShow() {
+            clearInterval(slideInterval);
+            startSlideShow();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetSlideShow();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetSlideShow();
+        });
+
+        startSlideShow();
+
+        // Sticky header background on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(0, 0, 0, 0.98)';
+                header.style.padding = '10px 0';
+            } else {
+                header.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+                header.style.padding = '20px 0';
+            }
+        });
+
+        // Image Lightbox Logic
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+        const galleryImgs = document.querySelectorAll(".gallery-item img, .gallery-item-large img");
+        const closeModal = document.querySelector(".close-modal");
+
+        galleryImgs.forEach(img => {
+            img.addEventListener("click", (e) => {
+                modal.style.display = "block";
+                modalImg.src = e.target.src;
+                document.body.style.overflow = "hidden"; // Prevent scrolling
+            });
+        });
+
+        // Close modal when clicking 'X' or outside the image
+        closeModal.onclick = () => {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        };
+
+        modal.onclick = (e) => {
+            if (e.target !== modalImg) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        };
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+    </script>
+</body>
+
+</html>
