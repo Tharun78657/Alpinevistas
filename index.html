@@ -69,15 +69,61 @@
             align-items: center;
             padding: 3px 0;
             gap: 20px;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
             header {
-                padding: 0 15px;
+                padding: 4px 10px;
             }
 
             .container {
-                padding: 0 10px;
+                padding: 0;
+                width: 100%;
+            }
+
+            .navbar {
+                padding: 0;
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                width: 100%;
+            }
+
+            .logo {
+                margin: 0;
+                flex-shrink: 0;
+                order: 1;
+            }
+
+            .logo img {
+                height: 28px;
+                width: auto;
+            }
+
+            .nav-links {
+                display: none !important;
+            }
+
+            .menu-toggle {
+                display: flex !important;
+                flex-direction: column;
+                gap: 4px;
+                padding: 6px;
+                margin: 0;
+                order: 2;
+                background: none;
+                border: none;
+                cursor: pointer;
+            }
+
+            .menu-toggle span {
+                width: 22px;
+                height: 2px;
+                background-color: var(--primary-gold);
+                border-radius: 2px;
             }
         }
 
@@ -90,12 +136,14 @@
             letter-spacing: 2px;
             display: flex;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .logo img {
             height: 80px;
             width: auto;
-            margin-right: 10px;
+            margin-right: 0;
+            margin-left: 0 !important;
             display: block;
         }
 
@@ -115,10 +163,114 @@
 
         .menu-toggle span {
             width: 25px;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-gold);
             border-radius: 2px;
             transition: all 0.3s ease;
+        }
+
+        @media (max-width: 480px) {
+            .menu-toggle span {
+                width: 20px;
+                height: 2.5px;
+            }
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Sidebar */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--black) 0%, var(--near-black) 100%);
+            border-left: 3px solid var(--primary-gold);
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .mobile-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .mobile-sidebar-header {
+            padding: 20px 15px;
+            border-bottom: 2px solid var(--primary-gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-sidebar-header img {
+            height: 60px;
+            width: auto;
+        }
+
+        .mobile-sidebar-content {
+            padding: 30px 0;
+        }
+
+        .mobile-sidebar-content ul {
+            list-style: none;
+        }
+
+        .mobile-sidebar-content li {
+            margin: 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .mobile-sidebar-content a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--text-white);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .mobile-sidebar-content a:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+            color: var(--primary-gold);
+            border-left-color: var(--primary-gold);
+            padding-left: 24px;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
         }
 
         .nav-links {
@@ -154,6 +306,16 @@
 
         .nav-links a:hover {
             color: var(--primary-gold);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
         }
 
         /* Hero Section */
@@ -644,7 +806,7 @@
             text-transform: uppercase;
         }
 
-        .contact-info > p {
+        .contact-info>p {
             margin-bottom: 20px;
             font-size: 0.9rem;
             line-height: 1.5;
@@ -1672,9 +1834,33 @@
                     <li><a href="#upcoming">Upcoming</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="mobile-sidebar-header">
+            <img src="images/Alpine.png" alt="Alpine Vistas Logo">
+        </div>
+        <div class="mobile-sidebar-content">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#amenities">Amenities</a></li>
+                <li><a href="#features">East Villas</a></li>
+                <li><a href="#west-villas">West Villas</a></li>
+                <li><a href="#upcoming">Upcoming</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -1698,7 +1884,8 @@
             <p>Presenting 40% open space and 100% enchanted for the kings and queens of today.</p>
             <div class="hero-buttons">
                 <a href="#contact" class="cta-button">Schedule a Visit</a>
-                <a href="https://drive.google.com/file/d/1fBgDXexzh5lf9tdoqvcTfKc6knz5TUFI/view?usp=sharing" class="cta-button secondary" target="_blank">Download Brochure</a>
+                <a href="https://drive.google.com/file/d/1fBgDXexzh5lf9tdoqvcTfKc6knz5TUFI/view?usp=sharing"
+                    class="cta-button secondary" target="_blank">Download Brochure</a>
             </div>
         </div>
     </section>
@@ -2183,7 +2370,8 @@
             <div class="footer-content"
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
                 <div>
-                    <a href="#" class="footer-logo"><img src="images/Alpine.png" alt="Alpine Vistas Logo" style="height: 150px; width: auto; margin-bottom: 10px;"></a>
+                    <a href="#" class="footer-logo"><img src="images/Alpine.png" alt="Alpine Vistas Logo"
+                            style="height: 150px; width: auto; margin-bottom: 10px;"></a>
                     <p style="color: #bbb;">An ultra-premium villa community offering luxury in the lap of nature.
                         Experience royal living with 40% open space and world-class amenities.</p>
                     <p style="margin-top: 15px; color: var(--primary-gold);">Developed by <strong>Anmol
@@ -2288,6 +2476,34 @@
         });
 
         startSlideShow();
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mobileSidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+        });
+
+        // Close sidebar when clicking overlay
+        sidebarOverlay.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            mobileSidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+        });
+
+        // Close sidebar when clicking a link
+        const sidebarLinks = document.querySelectorAll('.mobile-sidebar-content a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                mobileSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+        });
 
         // Sticky header background on scroll
         window.addEventListener('scroll', function () {
