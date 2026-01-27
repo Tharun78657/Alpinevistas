@@ -473,6 +473,9 @@
             letter-spacing: 5px;
             color: var(--primary-gold);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
         }
 
         .hero p {
@@ -480,6 +483,29 @@
             max-width: 800px;
             margin: 0 auto 30px;
             color: #eee;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .hero p:first-of-type {
+            animation-delay: 0.3s;
+        }
+
+        .hero p:nth-of-type(2) {
+            animation-delay: 0.6s;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.9s;
         }
 
         .cta-button {
@@ -509,14 +535,6 @@
             transform: translateY(-1px);
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
         .cta-button.secondary {
             background-color: transparent;
             color: var(--primary-gold);
@@ -529,11 +547,82 @@
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
         }
 
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Animation classes for scroll-triggered animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reset animations when hero section comes back into view */
+        .hero.reset-animation h1,
+        .hero.reset-animation p,
+        .hero.reset-animation .hero-buttons {
+            animation: none;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero.animate-hero h1 {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .hero.animate-hero p:first-of-type {
+            animation: fadeInUp 1s ease-out forwards 0.3s;
+        }
+
+        .hero.animate-hero p:nth-of-type(2) {
+            animation: fadeInUp 1s ease-out forwards 0.6s;
+        }
+
+        .hero.animate-hero .hero-buttons {
+            animation: fadeInUp 1s ease-out forwards 0.9s;
+        }
+
         @media (max-width: 768px) {
             .cta-button {
                 padding: 12px 30px;
                 font-size: 0.85rem;
                 letter-spacing: 1px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: 3px;
+            }
+
+            .hero p {
+                font-size: 1rem;
             }
         }
 
@@ -553,6 +642,15 @@
             .hero-buttons .cta-button {
                 flex: 1;
                 min-width: 150px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
             }
         }
 
@@ -2641,6 +2739,168 @@
                 document.body.style.overflow = "auto";
             }
         });
+
+        // Intersection Observer for Hero Section Animation on Scroll
+        const heroSection = document.querySelector('.hero');
+        let hasAnimated = false;
+
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px'
+        };
+
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove reset class and add animate class
+                    entry.target.classList.remove('reset-animation');
+                    entry.target.classList.add('animate-hero');
+                } else if (hasAnimated) {
+                    // When scrolling away, prepare for re-animation
+                    entry.target.classList.remove('animate-hero');
+                    entry.target.classList.add('reset-animation');
+
+                    // Small delay before allowing re-animation
+                    setTimeout(() => {
+                        entry.target.classList.remove('reset-animation');
+                    }, 100);
+                }
+
+                if (entry.isIntersecting && !hasAnimated) {
+                    hasAnimated = true;
+                }
+            });
+        }, observerOptions);
+
+        if (heroSection) {
+            heroObserver.observe(heroSection);
+        }
+
+        // Re-trigger animations on page refresh/load
+        window.addEventListener('load', () => {
+            if (heroSection) {
+                heroSection.classList.add('animate-hero');
+            }
+        });
+
+        // Optional: Also observe other sections for scroll animations
+        const observeElements = () => {
+            const elementsToAnimate = document.querySelectorAll('.section-title, .content-box, .feature-card, .spec-item');
+
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-on-scroll');
+                        setTimeout(() => {
+                            entry.target.classList.add('animated');
+                        }, 100);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            elementsToAnimate.forEach(el => {
+                scrollObserver.observe(el);
+            });
+
+            // Special animations for About section
+            const aboutSection = document.querySelector('#about');
+            const aboutImage = document.querySelector('.about-image');
+            const aboutTextParagraphs = document.querySelectorAll('.about-text p');
+
+            if (aboutSection) {
+                const aboutObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Animate image - slide in from right
+                            if (aboutImage) {
+                                aboutImage.style.opacity = '0';
+                                aboutImage.style.transform = 'translateX(50px)';
+                                aboutImage.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                                setTimeout(() => {
+                                    aboutImage.style.opacity = '1';
+                                    aboutImage.style.transform = 'translateX(0)';
+                                }, 200);
+                            }
+
+                            // Animate text paragraphs - staggered fade in from left
+                            aboutTextParagraphs.forEach((p, index) => {
+                                p.style.opacity = '0';
+                                p.style.transform = 'translateX(-30px)';
+                                p.style.transition = `opacity 0.6s ease-out, transform 0.6s ease-out`;
+                                setTimeout(() => {
+                                    p.style.opacity = '1';
+                                    p.style.transform = 'translateX(0)';
+                                }, 300 + (index * 150));
+                            });
+                        }
+                    });
+                }, {
+                    threshold: 0.3,
+                    rootMargin: '0px'
+                });
+
+                aboutObserver.observe(aboutSection);
+            }
+
+            // Special animations for Amenities section
+            const amenitiesSection = document.querySelector('#amenities');
+            const amenitiesImage = document.querySelector('#amenities .about-image');
+            const amenitiesTitle = document.querySelector('#amenities h3');
+            const amenitiesList = document.querySelectorAll('#amenities .facility-item');
+
+            if (amenitiesSection) {
+                const amenitiesObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Animate title
+                            if (amenitiesTitle) {
+                                amenitiesTitle.style.opacity = '0';
+                                amenitiesTitle.style.transform = 'translateY(-20px)';
+                                amenitiesTitle.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+                                setTimeout(() => {
+                                    amenitiesTitle.style.opacity = '1';
+                                    amenitiesTitle.style.transform = 'translateY(0)';
+                                }, 200);
+                            }
+
+                            // Animate list items - staggered fade in from left
+                            amenitiesList.forEach((item, index) => {
+                                item.style.opacity = '0';
+                                item.style.transform = 'translateX(-30px)';
+                                item.style.transition = `opacity 0.5s ease-out, transform 0.5s ease-out`;
+                                setTimeout(() => {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'translateX(0)';
+                                }, 350 + (index * 80));
+                            });
+
+                            // Animate image - slide in from right
+                            if (amenitiesImage) {
+                                amenitiesImage.style.opacity = '0';
+                                amenitiesImage.style.transform = 'translateX(50px)';
+                                amenitiesImage.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                                setTimeout(() => {
+                                    amenitiesImage.style.opacity = '1';
+                                    amenitiesImage.style.transform = 'translateX(0)';
+                                }, 250);
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.3,
+                    rootMargin: '0px'
+                });
+
+                amenitiesObserver.observe(amenitiesSection);
+            }
+        };
+
+        // Initialize scroll animations for other sections
+        observeElements();
+
     </script>
 </body>
 
